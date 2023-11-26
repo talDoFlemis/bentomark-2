@@ -2,5 +2,5 @@
 
 class GaussJacobi : public Model {
 public:
-  void solve(Matrix, Vector, double, int);
+  void solve(const Matrix &, const Vector &, double, int) override;
 };

@@ -6,10 +6,12 @@
 
 class Model {
 public:
-  Vector *result;
-  virtual void solve(Matrix, Vector, double, int) = 0;
-  Vector getResult();
-  double getError(Vector, Vector);
+  virtual ~Model() = default;
+
+  std::vector<Vector> result;
+  virtual void solve(const Matrix &, const Vector &, double, int) = 0;
+  Vector getResult() const;
+  double getError(const Vector &, const Vector &) const;
 };
 
 #endif

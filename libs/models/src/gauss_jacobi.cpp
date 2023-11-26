@@ -1,10 +1,11 @@
 #include "models/include/gauss_jacobi.hpp"
 
-void GaussJacobi::solve(Matrix mat, Vector vec, double error, int maxIttr) {
-  int size = mat.getSize();
+void GaussJacobi::solve(const Matrix &mat, const Vector &vec, double error,
+                        int maxIttr) {
+  size_t size = mat.getSize();
 
-  this->result = new Vector(size);
-  Vector x = *result;
+  this->result = std::vector<Vector>(1, Vector(size));
+  Vector x = result.front();
 
   Matrix C(size);
   Vector g(size);
@@ -20,7 +21,7 @@ void GaussJacobi::solve(Matrix mat, Vector vec, double error, int maxIttr) {
     }
 
     g.setValue(i, vec.getValue(i) / mat.getValue(i, i));
-    result->setValue(i, 0);
+    result.front().setValue(i, g.getValue(i));
   }
 
   for (int i = 0; i < maxIttr; i++) {
@@ -32,5 +33,5 @@ void GaussJacobi::solve(Matrix mat, Vector vec, double error, int maxIttr) {
     }
   }
 
-  this->result = &x;
+  this->result = std::vector<Vector>(1, x);
 }
