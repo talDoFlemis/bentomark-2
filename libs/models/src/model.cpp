@@ -1,9 +1,11 @@
 #include "models/include/model.hpp"
 #include <cmath>
+using namespace Models;
 
-Vector Model::getResult() const { return this->result.front(); }
+Algebra::Vector Model::getResult() const { return this->result.front(); }
 
-double Model::getError(const Vector &vec1, const Vector &vec2) const {
+double Model::getError(const Algebra::Vector &vec1,
+                       const Algebra::Vector &vec2) const {
   size_t size = vec1.getSize();
 
   double max = 0;

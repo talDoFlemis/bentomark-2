@@ -1,17 +1,20 @@
-#include "models/include/matrix.hpp"
-#include "models/include/vector.hpp"
-
 #ifndef Model_H
 #define Model_H
 
+#include "algebra/include/matrix.hpp"
+#include "algebra/include/vector.hpp"
+
+namespace Models {
 class Model {
 public:
   virtual ~Model() = default;
 
-  std::vector<Vector> result;
-  virtual void solve(const Matrix &, const Vector &, double, int) = 0;
-  Vector getResult() const;
-  double getError(const Vector &, const Vector &) const;
+  std::vector<Algebra::Vector> result;
+  virtual void solve(const Algebra::Matrix &, const Algebra::Vector &, double,
+                     int) = 0;
+  Algebra::Vector getResult() const;
+  double getError(const Algebra::Vector &, const Algebra::Vector &) const;
 };
+}; // namespace Models
 
 #endif
