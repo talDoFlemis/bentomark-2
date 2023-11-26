@@ -1,18 +1,19 @@
 #include "models/include/matrix.hpp"
+#include <cstddef>
 #include <iostream>
 
-Matrix::Matrix(int size) {
-  this->size = size;
-  this->values = (double *)malloc(sizeof(double) * size * size);
-}
+using namespace Models;
 
-int Matrix::getSize() { return this->size; }
+Matrix::Matrix(size_t size)
+    : size{size}, values{std::vector<double>(size * size, 0.0)} {}
 
-void Matrix::setValue(int i, int j, double value) {
+size_t Matrix::getSize() const { return this->size; }
+
+void Matrix::setValue(size_t i, size_t j, double value) {
   this->values[i * this->size + j] = value;
 }
 
-double Matrix::getValue(int i, int j) {
+double Matrix::getValue(size_t i, size_t j) const {
   return this->values[i * this->size + j];
 }
 
@@ -25,7 +26,7 @@ void Matrix::printMatrix() {
   }
 }
 
-Vector Matrix::operator*(Vector vec) {
+Vector Matrix::operator*(const Vector &vec) const {
   Vector result(this->size);
   double value;
 
@@ -38,4 +39,19 @@ Vector Matrix::operator*(Vector vec) {
   }
 
   return result;
+}
+
+Matrix::Matrix(std::initializer_list<std::initializer_list<double>> &&list)
+    : size{list.size()}, values{std::vector<double>(size * size, 1.0)} {
+  int i = 0;
+  int j = 0;
+  auto rows = std::move(list);
+  for (auto &row : rows) {
+    for (auto &value : row) {
+      this->setValue(i, j, value);
+      j++;
+    }
+    i++;
+    j = 0;
+  }
 }
