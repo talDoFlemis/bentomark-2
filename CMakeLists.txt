@@ -44,7 +44,7 @@ add_executable(tests
 )
 target_link_libraries(tests gtest gtest_main CommonLib TestsLib)
 add_custom_target(run_tests
-    COMMAND ctest
+    COMMAND ./tests
     DEPENDS tests
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
 )
