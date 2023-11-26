@@ -1,20 +1,31 @@
 #ifndef Vector_H
 #define Vector_H
 
+#include <cstddef>
+#include <initializer_list>
+#include <ostream>
+#include <vector>
+
+namespace Models {
 class Vector {
 private:
-  int size;
-  double *values;
+  size_t size;
+  std::vector<double> values;
 
 public:
-  Vector(int);
-  int getSize();
-  void setValue(int, double);
-  double getValue(int);
+  explicit Vector(size_t);
+  explicit Vector(std::initializer_list<double> &&);
+
+  size_t getSize() const;
+  void setValue(size_t, double);
+  double getValue(size_t) const;
   void printVector();
 
-  Vector operator+(Vector);
-  void operator<<(Vector);
+  Vector operator+(const Vector &) const;
+  void operator<<(const Vector &);
 };
+
+std::ostream &operator<<(std::ostream &, const Vector &);
+}; // namespace Models
 
 #endif
