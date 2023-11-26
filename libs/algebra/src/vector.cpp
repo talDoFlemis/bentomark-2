@@ -1,8 +1,8 @@
-#include "models/include/vector.hpp"
+#include "algebra/include/vector.hpp"
 #include <cstddef>
 #include <iostream>
 
-using namespace Models;
+using namespace Algebra;
 
 Vector::Vector(size_t size)
     : size{size}, values{std::vector<double>(size, 0.0)} {}

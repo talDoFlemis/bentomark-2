@@ -6,7 +6,7 @@
 #include <ostream>
 #include <vector>
 
-namespace Models {
+namespace Algebra {
 class Vector {
 private:
   size_t size;
@@ -26,6 +26,6 @@ public:
 };
 
 std::ostream &operator<<(std::ostream &, const Vector &);
-}; // namespace Models
+}; // namespace Algebra
 
 #endif

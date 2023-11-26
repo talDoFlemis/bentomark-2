@@ -1,12 +1,12 @@
-#include "models/include/vector.hpp"
+#ifndef Matrix_H
+#define Matrix_H
+
+#include "algebra/include/vector.hpp"
 #include <cstddef>
 #include <initializer_list>
 #include <vector>
 
-#ifndef Matrix_H
-#define Matrix_H
-
-namespace Models {
+namespace Algebra {
 class Matrix {
 private:
   size_t size;
@@ -24,6 +24,6 @@ public:
 
   Vector operator*(const Vector &) const;
 };
-}; // namespace Models
+}; // namespace Algebra
 
 #endif

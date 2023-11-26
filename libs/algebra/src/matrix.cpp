@@ -1,8 +1,8 @@
-#include "models/include/matrix.hpp"
+#include "algebra/include/matrix.hpp"
 #include <cstddef>
 #include <iostream>
 
-using namespace Models;
+using namespace Algebra;
 
 Matrix::Matrix(size_t size)
     : size{size}, values{std::vector<double>(size * size, 0.0)} {}
