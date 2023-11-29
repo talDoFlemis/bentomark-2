@@ -1,4 +1,4 @@
-#include "inputs/include/matrix_input.hpp"
+#include "inputs/include/matrix.hpp"
 #include "inspector/include/number_validator.hpp"
 #include <limits>
 

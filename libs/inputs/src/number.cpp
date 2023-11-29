@@ -1,4 +1,4 @@
-#include "inputs/include/number_input.hpp"
+#include "inputs/include/number.hpp"
 
 template <typename T>
 Inputs::Number<T>::Number(Inspector::NumberValidator<T> validator)

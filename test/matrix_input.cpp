@@ -1,4 +1,4 @@
-#include "inputs/include/matrix_input.hpp"
+#include "inputs/include/matrix.hpp"
 #include "algebra/include/matrix.hpp"
 #include <gtest/gtest.h>
 #include <sstream>

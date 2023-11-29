@@ -1,4 +1,4 @@
-#include "inputs/include/vector_input.hpp"
+#include "inputs/include/vector.hpp"
 #include "inspector/include/number_validator.hpp"
 Inputs::Vector::Vector(size_t size) : size(size) {}
 

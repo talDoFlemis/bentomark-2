@@ -1,5 +1,5 @@
 #include "algebra/include/vector.hpp"
-#include "inputs/include/vector_input.hpp"
+#include "inputs/include/vector.hpp"
 #include <gtest/gtest.h>
 #include <sstream>
 

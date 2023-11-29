@@ -1,4 +1,4 @@
-#include "inputs/include/number_input.hpp"
+#include "inputs/include/number.hpp"
 #include <gtest/gtest.h>
 #include <sstream>
 
