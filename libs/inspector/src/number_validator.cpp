@@ -1,24 +1,12 @@
 #include "inspector/include/number_validator.hpp"
+#include <charconv>
 #include <iostream>
 #include <stdexcept>
 #include <string>
 
-template <>
-Inspector::NumberValidator<int>::NumberValidator(const std::string &target) {
-  try {
-    this->value = std::stoi(target);
-  } catch (const std::invalid_argument &) {
-    this->error_messages.emplace_back("Não é um número válido");
-  }
-}
-
-template <>
-Inspector::NumberValidator<float>::NumberValidator(const std::string &target) {
-  try {
-    this->value = std::stof(target);
-  } catch (const std::invalid_argument &) {
-    this->error_messages.emplace_back("Não é um número válido");
-  }
+template <typename T>
+Inspector::NumberValidator<T>::NumberValidator(const std::string &target) {
+  this->validate_value(target);
 }
 
 template <typename T>
@@ -94,22 +82,20 @@ template <typename T> T Inspector::NumberValidator<T>::get_value() const {
   return this->value;
 }
 
-template <>
-void Inspector::NumberValidator<int>::set_value(const std::string &target) {
-  try {
-    this->clear_error_messages();
-    this->value = std::stoi(target);
-  } catch (const std::invalid_argument &) {
-    this->error_messages.emplace_back("Não é um número válido");
-  }
+template <typename T>
+void Inspector::NumberValidator<T>::set_value(const std::string &target) {
+  this->clear_error_messages();
+  this->validate_value(target);
 }
 
-template <>
-void Inspector::NumberValidator<float>::set_value(const std::string &target) {
-  try {
-    this->clear_error_messages();
-    this->value = std::stof(target);
-  } catch (const std::invalid_argument &) {
+template <typename T>
+void Inspector::NumberValidator<T>::validate_value(const std::string &target) {
+  if (target.empty()) {
+    this->error_messages.emplace_back("Valor não pode ser vazio");
+  }
+  const auto finish = &*cend(target);
+  const auto length = std::from_chars(&*cbegin(target), finish, this->value);
+  if (length.ptr != finish) {
     this->error_messages.emplace_back("Não é um número válido");
   }
 }
