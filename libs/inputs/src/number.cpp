@@ -1,4 +1,5 @@
 #include "inputs/include/number.hpp"
+#include "cli/include/error_printer.hpp"
 
 template <typename T>
 Inputs::Number<T>::Number(Inspector::NumberValidator<T> validator)
@@ -18,7 +19,7 @@ T Inputs::Number<T>::read(std::istream &in, std::ostream &out,
     if (validator.validate()) {
       break;
     }
-    err << "Número inválido" << std::endl;
+    Cli::ErrorPrinter::error_list(err, validator.get_error_messages());
   }
   return validator.get_value();
 }

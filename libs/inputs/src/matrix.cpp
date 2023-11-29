@@ -1,4 +1,5 @@
 #include "inputs/include/matrix.hpp"
+#include "cli/include/error_printer.hpp"
 #include "inspector/include/number_validator.hpp"
 #include <limits>
 
@@ -38,7 +39,7 @@ double Inputs::Matrix::get_input_until_success(std::istream &input,
     if (input_validator.validate()) {
       break;
     }
-    error << "Valor inválido, tente novamente" << std::endl;
+    Cli::ErrorPrinter::error_list(error, input_validator.get_error_messages());
   }
 
   return input_validator.get_value();

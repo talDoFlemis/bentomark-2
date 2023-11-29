@@ -1,5 +1,7 @@
 #include "inputs/include/vector.hpp"
+#include "cli/include/error_printer.hpp"
 #include "inspector/include/number_validator.hpp"
+
 Inputs::Vector::Vector(size_t size) : size(size) {}
 
 Algebra::Vector Inputs::Vector::read(std::istream &input, std::ostream &output,
@@ -35,7 +37,7 @@ double Inputs::Vector::get_input_until_success(std::istream &input,
     if (input_validator.validate()) {
       break;
     }
-    error << "Valor inválido, tente novamente" << std::endl;
+    Cli::ErrorPrinter::error_list(error, input_validator.get_error_messages());
   }
 
   return input_validator.get_value();
