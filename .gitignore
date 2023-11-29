@@ -89,5 +89,5 @@ _deps
 .cache
 
 bins/**
-cli
+/cli
 tests*
