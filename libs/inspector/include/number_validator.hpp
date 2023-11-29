@@ -23,6 +23,7 @@ public:
 };
 
 template class NumberValidator<int>;
+template class NumberValidator<size_t>;
 template class NumberValidator<float>;
 template class NumberValidator<double>;
 } // namespace Inspector

@@ -224,3 +224,18 @@ TEST(NumberValidatorTest, TestCientificNotation) {
   EXPECT_TRUE(validator.get_error_messages().empty());
   EXPECT_EQ(validator.get_value(), 1e-10);
 }
+
+TEST(NumberValidatorTest, TestSizeT) {
+  auto validator = Inspector::NumberValidator<size_t>("42");
+
+  EXPECT_TRUE(validator.validate());
+  EXPECT_TRUE(validator.get_error_messages().empty());
+  EXPECT_EQ(validator.get_value(), 42);
+}
+
+TEST(NumberValidatorTest, TestSizeTInvalid) {
+  auto validator = Inspector::NumberValidator<size_t>("-42");
+
+  EXPECT_FALSE(validator.validate());
+  EXPECT_FALSE(validator.get_error_messages().empty());
+}
