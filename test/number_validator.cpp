@@ -216,3 +216,11 @@ TEST(NumberValidatorTest, TestWithResetValue) {
   EXPECT_TRUE(validator.validate());
   EXPECT_TRUE(validator.get_error_messages().empty());
 }
+
+TEST(NumberValidatorTest, TestCientificNotation) {
+  auto validator = Inspector::NumberValidator<double>("1e-10");
+
+  EXPECT_TRUE(validator.validate());
+  EXPECT_TRUE(validator.get_error_messages().empty());
+  EXPECT_EQ(validator.get_value(), 1e-10);
+}

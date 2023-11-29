@@ -24,6 +24,7 @@ public:
 
 template class NumberValidator<int>;
 template class NumberValidator<float>;
+template class NumberValidator<double>;
 } // namespace Inspector
 
 #endif // !NUMBER_H
