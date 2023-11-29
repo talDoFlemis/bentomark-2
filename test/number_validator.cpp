@@ -15,6 +15,13 @@ TEST(NumberValidatorTest, FloatValidation) {
   EXPECT_TRUE(validator.get_error_messages().empty());
 }
 
+TEST(NumberValidatorTest, EmptyInput) {
+  auto validator = Inspector::NumberValidator<float>("");
+
+  EXPECT_FALSE(validator.validate());
+  EXPECT_FALSE(validator.get_error_messages().empty());
+}
+
 TEST(NumberValidatorTest, InvalidInput) {
   auto validator = Inspector::NumberValidator<int>("invalid");
 
@@ -153,5 +160,82 @@ TEST(NumberValidatorTest, SetValueInvalid) {
   validator.set_value("invalid");
 
   EXPECT_EQ(validator.get_value(), 42);
+  EXPECT_FALSE(validator.get_error_messages().empty());
+}
+
+TEST(NumberValidatorTest, TestStringWithSpaces) {
+  auto validator = Inspector::NumberValidator<int>("1 2 3 4");
+
+  EXPECT_FALSE(validator.validate());
+  EXPECT_FALSE(validator.get_error_messages().empty());
+}
+
+TEST(NumberValidatorTest, TestStringWithNewLines) {
+  auto validator = Inspector::NumberValidator<int>("42 42\n\n");
+
+  EXPECT_FALSE(validator.validate());
+  EXPECT_FALSE(validator.get_error_messages().empty());
+}
+
+TEST(NumberValidatorTest, TestStringWithTabs) {
+  auto validator = Inspector::NumberValidator<int>("42\t42");
+
+  EXPECT_FALSE(validator.validate());
+  EXPECT_FALSE(validator.get_error_messages().empty());
+}
+
+TEST(NumberValidatorTest, TestStringWithLetters) {
+  auto validator = Inspector::NumberValidator<int>("42a");
+
+  EXPECT_FALSE(validator.validate());
+  EXPECT_FALSE(validator.get_error_messages().empty());
+}
+
+TEST(NumberValidatorTest, TestStringWithSymbols) {
+  auto validator = Inspector::NumberValidator<int>("42@");
+
+  EXPECT_FALSE(validator.validate());
+  EXPECT_FALSE(validator.get_error_messages().empty());
+}
+
+TEST(NumberValidatorTest, TestStringWithNegative) {
+  auto validator = Inspector::NumberValidator<int>("-42");
+
+  EXPECT_TRUE(validator.validate());
+  EXPECT_TRUE(validator.get_error_messages().empty());
+}
+
+TEST(NumberValidatorTest, TestWithResetValue) {
+  auto validator = Inspector::NumberValidator<int>("");
+
+  EXPECT_FALSE(validator.validate());
+  EXPECT_FALSE(validator.get_error_messages().empty());
+
+  validator.set_value("42");
+
+  EXPECT_TRUE(validator.validate());
+  EXPECT_TRUE(validator.get_error_messages().empty());
+}
+
+TEST(NumberValidatorTest, TestCientificNotation) {
+  auto validator = Inspector::NumberValidator<double>("1e-10");
+
+  EXPECT_TRUE(validator.validate());
+  EXPECT_TRUE(validator.get_error_messages().empty());
+  EXPECT_EQ(validator.get_value(), 1e-10);
+}
+
+TEST(NumberValidatorTest, TestSizeT) {
+  auto validator = Inspector::NumberValidator<size_t>("42");
+
+  EXPECT_TRUE(validator.validate());
+  EXPECT_TRUE(validator.get_error_messages().empty());
+  EXPECT_EQ(validator.get_value(), 42);
+}
+
+TEST(NumberValidatorTest, TestSizeTInvalid) {
+  auto validator = Inspector::NumberValidator<size_t>("-42");
+
+  EXPECT_FALSE(validator.validate());
   EXPECT_FALSE(validator.get_error_messages().empty());
 }

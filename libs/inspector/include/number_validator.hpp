@@ -8,6 +8,7 @@ namespace Inspector {
 template <typename T> class NumberValidator : public Validator {
 private:
   T value;
+  void validate_value(const std::string &);
 
 public:
   explicit NumberValidator(const std::string &);
@@ -22,7 +23,9 @@ public:
 };
 
 template class NumberValidator<int>;
+template class NumberValidator<size_t>;
 template class NumberValidator<float>;
+template class NumberValidator<double>;
 } // namespace Inspector
 
 #endif // !NUMBER_H
