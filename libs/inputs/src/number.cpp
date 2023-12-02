@@ -23,3 +23,8 @@ T Inputs::Number<T>::read(std::istream &in, std::ostream &out,
   }
   return validator.get_value();
 }
+
+template class Inputs::Number<int>;
+template class Inputs::Number<size_t>;
+template class Inputs::Number<float>;
+template class Inputs::Number<double>;
