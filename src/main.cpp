@@ -16,7 +16,8 @@ int main(int argc, char *argv[]) {
   auto vectors = std::vector<Algebra::Vector>();
 
   std::cout << "Digite o valor do epsilon: ";
-  auto valid_epsilon = Inspector::NumberValidator<double>("").greaterThan(0);
+  auto valid_epsilon = Inspector::NumberValidator<double>("");
+  valid_epsilon.greaterThan(0);
   double epsilon = Inputs::Number<double>(&valid_epsilon)
                        .read(std::cin, std::cout, std::cerr);
 
