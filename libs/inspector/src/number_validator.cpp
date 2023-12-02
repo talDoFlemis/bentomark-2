@@ -90,6 +90,7 @@ void Inspector::NumberValidator<T>::set_value(const std::string &target) {
 
 template <typename T>
 void Inspector::NumberValidator<T>::validate_value(const std::string &target) {
+
   if (target.empty()) {
     this->error_messages.emplace_back("Valor não pode ser vazio");
   }
