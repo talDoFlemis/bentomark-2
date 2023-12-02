@@ -9,16 +9,19 @@ double Model::getError(const Algebra::Vector &vec1,
                        const Algebra::Vector &vec2) const {
   size_t size = vec1.getSize();
 
-  double max = 0;
+  double max = 0, max2 = 0;
   double current;
   for (int i = 0; i < size; i++) {
     current = std::abs(vec1.getValue(i) - vec2.getValue(i));
     if (current > max) {
       max = current;
     }
+    if (std::abs(vec2.getValue(i)) > max2) {
+      max2 = std::abs(vec2.getValue(i));
+    }
   }
 
-  return max;
+  return max/max2;
 }
 
 Algebra::Matrix Model::solveInverse(const Algebra::Matrix &mat, double error, int maxIttr) {

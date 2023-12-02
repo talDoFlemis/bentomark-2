@@ -1,4 +1,5 @@
 #include "models/include/gauss_seidel.hpp"
+#include <iostream>
 
 using namespace Models;
 void GaussSeidel::solve(const Algebra::Matrix &mat, const Algebra::Vector &vec,
@@ -9,7 +10,11 @@ void GaussSeidel::solve(const Algebra::Matrix &mat, const Algebra::Vector &vec,
   this->result = std::vector<Algebra::Vector>(1, Algebra::Vector(size));
   Algebra::Vector x = result.front();
 
-  Algebra::Vector aux(3);
+  Algebra::Vector aux(size);
+
+  for (int i = 0; i < size; i++) {
+    x.setValue(i, vec.getValue(i)/mat.getValue(i, i));
+  }
 
   for (int i = 0; i < maxIttr; i++) {
     aux << x;
