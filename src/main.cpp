@@ -1,10 +1,15 @@
 #include "algebra/include/matrix.hpp"
+#include "algebra/include/vector.hpp"
 #include "cli/include/solution_printer.hpp"
 #include "inputs/include/matrix.hpp"
 #include "inputs/include/number.hpp"
 #include "inputs/include/vector.hpp"
+#include "models/include/gauss_jacobi.hpp"
+#include "models/include/model.hpp"
 #include <cstddef>
 #include <iostream>
+#include <memory>
+#include <vector>
 
 int main(int argc, char *argv[]) {
   auto greater_than_zero = Inspector::NumberValidator<size_t>("0");
@@ -36,12 +41,30 @@ int main(int argc, char *argv[]) {
     Algebra::Vector v = vector.read(std::cin, std::cout, std::cerr);
     vectors.emplace_back(v);
 
-    Cli::SolutionPrinter::print_system(m, v, std::cout);
+    std::vector<std::unique_ptr<Models::Model>> models;
   }
 
-  for (const auto &matrix : matrices) {
-    std::cout << matrix;
-  }
+
+
+  auto vectorsJacobi = std::vector<Algebra::Vector>();
+  auto vectorsSeidel = std::vector<Algebra::Vector>();
+  for (auto i = 0; i < n_systems; i++) {
+    
+    Models::GaussJacobi gaussJacobi;
+    Models::GaussJacobi gaussSeidel;
+      gaussJacobi.solve(matrices[i], vectors[i], epsilon, 1000);
+      gaussSeidel.solve(matrices[i], vectors[i], epsilon, 1000);
+
+      vectorsJacobi.emplace_back(gaussJacobi.getResult());
+      vectorsSeidel.emplace_back(gaussSeidel.getResult());
+    }
+
+    for (auto i = 0; i < n_systems; i++) {
+
+      Cli::SolutionPrinter::print_system(matrices[i], vectors[i], vectorsJacobi[i], std::cout);
+      Cli::SolutionPrinter::print_system(matrices[i], vectors[i], vectorsSeidel[i], std::cout);
+    }
 
   return 0;
 }
+
