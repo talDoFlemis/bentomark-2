@@ -99,3 +99,9 @@ void Inspector::NumberValidator<T>::validate_value(const std::string &target) {
     this->error_messages.emplace_back("Não é um número válido");
   }
 }
+
+template class Inspector::NumberValidator<int>;
+template class Inspector::NumberValidator<size_t>;
+template class Inspector::NumberValidator<float>;
+template class Inspector::NumberValidator<double>;
+

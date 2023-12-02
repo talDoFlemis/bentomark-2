@@ -21,11 +21,6 @@ public:
   T get_value() const;
   void set_value(const std::string &);
 };
-
-template class NumberValidator<int>;
-template class NumberValidator<size_t>;
-template class NumberValidator<float>;
-template class NumberValidator<double>;
 } // namespace Inspector
 
 #endif // !NUMBER_H
