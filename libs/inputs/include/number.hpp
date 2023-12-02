@@ -6,10 +6,10 @@
 namespace Inputs {
 template <typename T> class Number : public Input<T> {
 private:
-  Inspector::NumberValidator<T> validator;
+  Inspector::NumberValidator<T> *validator;
 
 public:
-  explicit Number(Inspector::NumberValidator<T>);
+  explicit Number(Inspector::NumberValidator<T> *);
   T read(std::istream &, std::ostream &, std::ostream &) override;
 };
 };     // namespace Inputs
