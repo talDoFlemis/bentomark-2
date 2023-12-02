@@ -4,6 +4,8 @@
 #include "algebra/include/vector.hpp"
 #include <cstddef>
 #include <initializer_list>
+#include <ostream>
+#include <sstream>
 #include <vector>
 
 namespace Algebra {
@@ -24,6 +26,9 @@ public:
 
   Vector operator*(const Vector &) const;
 };
+std::ostream &operator<<(std::ostream &os, const Matrix &matrix);
+
+
 }; // namespace Algebra
 
 #endif
