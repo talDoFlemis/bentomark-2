@@ -1,4 +1,7 @@
 #include "models/include/gauss_jacobi.hpp"
+#include "algebra/include/matrix.hpp"
+#include "algebra/include/vector.hpp"
+#include <cstddef>
 
 using namespace Models;
 void GaussJacobi::solve(const Algebra::Matrix &mat, const Algebra::Vector &vec,
