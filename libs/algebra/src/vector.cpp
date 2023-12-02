@@ -46,7 +46,7 @@ void Vector::operator<<(const Vector &vec) {
   }
 }
 
-std::ostream &operator<<(std::ostream &os, const Vector &vec) {
+std::ostream &Algebra::operator<<(std::ostream &os, const Vector &vec) {
   os << "[ ";
   for (int i = 0; i < vec.getSize(); i++) {
     os << vec.getValue(i) << " ";
