@@ -9,7 +9,6 @@ class SolutionPrinter {
 public:
   static void print_system(const Algebra::Matrix &, const Algebra::Vector &,
                            std::ostream &output);
-  static void print_inverse(const Algebra::Matrix &, std::ostream &output);
 };
 };     // namespace Cli
 #endif // !SOLUTION_PRINT_HPP
