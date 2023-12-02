@@ -11,8 +11,6 @@ T Inputs::Number<T>::read(std::istream &in, std::ostream &out,
   std::string input_value;
   validator.clear_error_messages();
 
-  out << "Entre um número";
-
   while (true) {
     in >> input_value;
     validator.set_value(input_value.c_str());
