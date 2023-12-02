@@ -7,7 +7,7 @@
 namespace Cli {
 class SolutionPrinter {
 public:
-  static void print_system(const Algebra::Matrix &, const Algebra::Vector &,
+  static void print_system(const Algebra::Matrix &, const Algebra::Vector &, const Algebra::Vector &,
                            std::ostream &output);
 };
 };     // namespace Cli
