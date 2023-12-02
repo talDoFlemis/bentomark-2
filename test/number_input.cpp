@@ -9,7 +9,7 @@ TEST(NumberReaderTest, ReadValidNumber) {
 
   auto validator = Inspector::NumberValidator<double>("");
   validator.between(0, 10).not_equal(5);
-  auto input_vector = Inputs::Number<double>(&validator);
+  auto input_vector = Inputs::Number<double>(&validator, "");
   double result = input_vector.read(input, output, error);
   double expected = 1;
 
@@ -24,7 +24,7 @@ TEST(NumberReaderTest, CatchInvalidInput) {
 
   auto validator = Inspector::NumberValidator<double>("");
   validator.between(0, 10).not_equal(5);
-  auto input_vector = Inputs::Number<double>(&validator);
+  auto input_vector = Inputs::Number<double>(&validator, "");
   double result = input_vector.read(input, output, error);
   double expected = 1;
 
@@ -39,7 +39,7 @@ TEST(NumberReaderTest, CatchInvalidInputWithCustomMessage) {
 
   auto validator = Inspector::NumberValidator<double>("Valor inválido");
   validator.between(0, 10).not_equal(5);
-  auto input_vector = Inputs::Number<double>(&validator);
+  auto input_vector = Inputs::Number<double>(&validator, "");
   double result = input_vector.read(input, output, error);
   double expected = 1;
 

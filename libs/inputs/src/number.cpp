@@ -2,8 +2,9 @@
 #include "cli/include/error_printer.hpp"
 
 template <typename T>
-Inputs::Number<T>::Number(Inspector::NumberValidator<T> *validator)
-    : validator(validator) {}
+Inputs::Number<T>::Number(Inspector::NumberValidator<T> *validator,
+                          const std::string &message)
+    : validator(validator), message(message) {}
 
 template <typename T>
 T Inputs::Number<T>::read(std::istream &in, std::ostream &out,
@@ -12,6 +13,7 @@ T Inputs::Number<T>::read(std::istream &in, std::ostream &out,
   validator->clear_error_messages();
 
   while (true) {
+    out << message;
     input_value.clear();
     std::getline(in, input_value);
     validator->set_value(input_value.c_str());

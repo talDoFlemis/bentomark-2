@@ -7,9 +7,10 @@ namespace Inputs {
 template <typename T> class Number : public Input<T> {
 private:
   Inspector::NumberValidator<T> *validator;
+  std::string message;
 
 public:
-  explicit Number(Inspector::NumberValidator<T> *);
+  explicit Number(Inspector::NumberValidator<T> *, const std::string &);
   T read(std::istream &, std::ostream &, std::ostream &) override;
 };
 };     // namespace Inputs
