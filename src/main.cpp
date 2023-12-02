@@ -8,25 +8,23 @@
 
 int main(int argc, char *argv[]) {
   std::cout << "Digite a quantidade de sistemas que você deseja resolver: ";
-  auto sys_valid = Inspector::NumberValidator<size_t>("").greaterThan(0);
-  size_t n_systems =
-      Inputs::Number<size_t>(sys_valid).read(std::cin, std::cout, std::cerr);
-
+  auto greater_than_zero = Inspector::NumberValidator<size_t>("0");
+  greater_than_zero.greaterThan(0);
+  size_t n_systems = Inputs::Number<size_t>(&greater_than_zero)
+                         .read(std::cin, std::cout, std::cerr);
   auto matrices = std::vector<Algebra::Matrix>();
   auto vectors = std::vector<Algebra::Vector>();
-  auto greater_than_zero =
-      Inspector::NumberValidator<size_t>("").greaterThan(0);
 
   std::cout << "Digite o valor do epsilon: ";
   auto valid_epsilon = Inspector::NumberValidator<double>("").greaterThan(0);
-  double epsilon = Inputs::Number<double>(valid_epsilon)
+  double epsilon = Inputs::Number<double>(&valid_epsilon)
                        .read(std::cin, std::cout, std::cerr);
 
   std::cout << "Pegando as matrizes e os vetores" << std::endl;
   for (size_t i = 0; i < n_systems; i++) {
     std::cout << "Digite o tamanho da matriz: ";
 
-    size_t matrix_size = Inputs::Number<size_t>(greater_than_zero)
+    size_t matrix_size = Inputs::Number<size_t>(&greater_than_zero)
                              .read(std::cin, std::cout, std::cerr);
     auto matrix = Inputs::Matrix(matrix_size);
     Algebra::Matrix m = matrix.read(std::cin, std::cout, std::cerr);
@@ -39,8 +37,8 @@ int main(int argc, char *argv[]) {
     Cli::SolutionPrinter::print_system(m, v, std::cout);
   }
 
-  for (auto &matrix : matrices) {
-    matrix.printMatrix();
+  for (const auto &matrix : matrices) {
+    std::cout << matrix;
   }
 
   return 0;
