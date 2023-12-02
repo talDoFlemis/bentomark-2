@@ -55,3 +55,45 @@ Matrix::Matrix(std::initializer_list<std::initializer_list<double>> &&list)
     j = 0;
   }
 }
+
+Matrix Matrix::pivote_max() const {
+  Algebra::Matrix m{size};
+
+  for (size_t j = 0; j < size; ++j) {
+    double max = getValue(j, j);
+    double max_line = 0;
+    for (size_t i = j + 1; i < size; ++i) {
+      double v = getValue(i, j);
+      if (v > max) {
+        max = v;
+        max_line = i;
+      }
+    }
+
+    for (size_t k = 0; k < size; ++k) {
+      m.setValue(j, k, getValue(max_line, k));
+    }
+  }
+  return m;
+}
+
+Matrix Matrix::upper_triangular() const {
+  Algebra::Matrix m{*this};
+
+  // turns `m` into upper triangular
+  for (size_t p = 0; p < size; ++p) {
+    double pivot = getValue(p, p);
+    for (size_t i = p + 1; i < size; ++i) {
+      double x = getValue(i, p);
+      if (x == 0) {
+        continue;
+      }
+
+      for (size_t j = 0; j < size; ++j) {
+        double new_val = m.getValue(i, j) - (getValue(p, j) * (x / pivot));
+        m.setValue(i, j, new_val);
+      }
+    }
+  }
+  return m;
+}

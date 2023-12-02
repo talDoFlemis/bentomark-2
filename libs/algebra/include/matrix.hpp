@@ -22,6 +22,16 @@ public:
   double getValue(size_t, size_t) const;
   void printMatrix();
 
+  // related algorithms
+
+  // Pivote lines to make them have the max pivote possible.
+  // This operation have a complexity of O(n^2).
+  Matrix pivote_max() const;
+
+  // turn the current matrix into upper triangular.
+  // This operation have a complexity of O(n^3).
+  Matrix upper_triangular() const;
+
   Vector operator*(const Vector &) const;
 };
 }; // namespace Algebra
