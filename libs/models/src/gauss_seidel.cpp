@@ -13,18 +13,20 @@ void GaussSeidel::solve(const Algebra::Matrix &mat, const Algebra::Vector &vec,
 
   for (int i = 0; i < maxIttr; i++) {
     aux << x;
+    double auxValue;
 
-    x.setValue(0, (vec.getValue(0) - mat.getValue(0, 1) * aux.getValue(1) -
-                   mat.getValue(0, 2) * aux.getValue(2)) /
-                      (mat.getValue(0, 0)));
+    for (int j = 0; j < size; j++) {
+        auxValue = vec.getValue(j);
+        for (int k = 0; k < size; k++) {
+            if (j < k) {
+                auxValue -= mat.getValue(j, k) * aux.getValue(k);
+            } else if (j > k) {
+                auxValue -= mat.getValue(j, k) * x.getValue(k);
+            }
+        }
 
-    x.setValue(1, (vec.getValue(1) - mat.getValue(1, 0) * x.getValue(0) -
-                   mat.getValue(1, 2) * aux.getValue(2)) /
-                      (mat.getValue(1, 1)));
-
-    x.setValue(2, (vec.getValue(2) - mat.getValue(2, 0) * x.getValue(0) -
-                   mat.getValue(2, 1) * x.getValue(1)) /
-                      (mat.getValue(2, 2)));
+      x.setValue(j, (auxValue) / (mat.getValue(j, j)));
+    }
 
     if (this->getError(x, aux) < error) {
       break;

@@ -12,6 +12,7 @@ public:
   std::vector<Algebra::Vector> result;
   virtual void solve(const Algebra::Matrix &, const Algebra::Vector &, double,
                      int) = 0;
+  Algebra::Matrix solveInverse(const Algebra::Matrix &, double, int);
   Algebra::Vector getResult() const;
   double getError(const Algebra::Vector &, const Algebra::Vector &) const;
 };
