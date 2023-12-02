@@ -28,7 +28,7 @@ double Inputs::Vector::get_input_until_success(std::istream &input,
   auto input_validator = Inspector::NumberValidator<double>("");
 
   while (true) {
-    output << "Insira o valor da posição [" << i << "]";
+    output << "Insira o valor da posição [" << i << "]: ";
 
     input_value.clear();
     std::getline(input, input_value);

@@ -1,5 +1,7 @@
 #include "algebra/include/matrix.hpp"
 #include <cstddef>
+#include <iomanip>
+#include <ios>
 #include <iostream>
 
 using namespace Algebra;
@@ -54,4 +56,27 @@ Matrix::Matrix(std::initializer_list<std::initializer_list<double>> &&list)
     i++;
     j = 0;
   }
+}
+
+std::ostream &Algebra::operator<<(std::ostream &os, const Matrix &matrix) {
+  int maxLength = 1;
+  for (size_t i = 0; i < matrix.getSize(); i++) {
+    for (size_t j = 0; j < matrix.getSize(); j++) {
+      maxLength =
+          std::max(maxLength,
+                   static_cast<int>(std::to_string(matrix.getValue(i, j)).length()));
+    }
+  }
+
+  os <<std::fixed << std::setprecision(3);
+  for (int i = 0; i < matrix.getSize(); i++) {
+    os << "|";
+    for (int j = 0; j < matrix.getSize(); j++) {
+      double number = matrix.getValue(i, j);
+
+      os << std::setw(maxLength) << number << std::right;
+    }
+    os << "|" << std::endl;
+  }
+  return os;
 }
