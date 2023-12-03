@@ -29,6 +29,8 @@ void GaussJacobi::solve(const Algebra::Matrix &mat, const Algebra::Vector &vec,
     aux << x;
     x = C * x + g;
 
+    this->set_model_result(aux, x);
+
     if (this->getError(x, aux) < error) {
       break;
     }
