@@ -1,5 +1,4 @@
 #include "models/include/gauss_seidel.hpp"
-#include <iostream>
 
 using namespace Models;
 void GaussSeidel::solve(const Algebra::Matrix &mat, const Algebra::Vector &vec,
@@ -32,6 +31,8 @@ void GaussSeidel::solve(const Algebra::Matrix &mat, const Algebra::Vector &vec,
 
       x.setValue(j, (auxValue) / (mat.getValue(j, j)));
     }
+
+    this->set_model_result(aux, x);
 
     if (this->getError(x, aux) < error) {
       break;

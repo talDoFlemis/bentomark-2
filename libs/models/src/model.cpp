@@ -1,7 +1,17 @@
 #include "models/include/model.hpp"
 #include <cmath>
 #include <vector>
+
 using namespace Models;
+void Model::set_model_result(const Algebra::Vector &vec1,
+                       const Algebra::Vector &vec2)
+{
+  results.steps.push_back(results.next_step());
+  results.errors.push_back(getError(vec1, vec2));
+  results.xs.push_back(vec2);
+}
+
+Model_Result Model::get_model_result() const {return results;}
 
 Algebra::Vector Model::getResult() const { return this->result.front(); }
 

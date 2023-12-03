@@ -38,3 +38,11 @@ TEST(JacobiTest, FourByFour) {
     EXPECT_NEAR(res.getValue(i), expected.getValue(i), error);
   }
 }
+
+TEST(JacobiTest, EmptyResult) {
+  // TODO: testar se o resultado é vazio quando não converge
+}
+
+TEST(JacobiTest, EvalModelResult) {
+  // TODO: testar se o ModelResult está correto
+}

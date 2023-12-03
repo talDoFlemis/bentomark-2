@@ -62,6 +62,7 @@ CMakeLists.txt.user*
 *.opensdf
 *.vcxproj
 *vcxproj.*
+.vscode
 *.json
 
 # MinGW generated files
@@ -89,7 +90,8 @@ CTestTestfile.cmake
 _deps
 .cache
 
+
 bins/**
 /cli
 tests*
-build/cli
+/build/
