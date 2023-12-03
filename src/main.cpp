@@ -182,6 +182,7 @@ int main(int argc, char *argv[]) {
          if (jacobiSeidel == 0 || jacobiSeidel == 2) {
             if (!A.checkLineCriteria()) {
                A2 = A.pivote_max();
+               std::cout << A2 << std::endl;
                jacobi.solve(A2, b, epsilon, 100);
             } else {
                jacobi.solve(A, b, epsilon, 100);
@@ -228,5 +229,106 @@ int main(int argc, char *argv[]) {
             Cli::SolutionPrinter::print_system(A, b, seidelResult, std::cout);
          }  
       }
-   } 
+   } else if (systemOrInverse == 1) {
+      size_t newOrBenchmark =
+      Inputs::Number<size_t>(
+          &zero_or_one,
+          "Deseja entrar uma matriz customizada [0] ou usar o nosso benchmark [1]? : ")
+          .read(std::cin, std::cout, std::cerr);
+         
+      
+      if (newOrBenchmark == 1) {
+         size_t n_systems =
+               Inputs::Number<size_t>(
+                  &greater_than_zero,
+                  "Digite a quantidade de matrizes que você deseja resolver: ")
+                  .read(std::cin, std::cout, std::cerr);
+         auto matrices = std::vector<Algebra::Matrix>();
+
+         matrices.emplace_back(Algebra::Matrix{{{10, 2, 1}, {1, 5, 1}, {2, 3, 10}}});
+
+         matrices.emplace_back(Algebra::Matrix{{{5, 3, 1}, {5, 6, 1}, {1, 6, 7}}});
+
+         matrices.emplace_back(Algebra::Matrix{{{2, 3, 10}, {10, 2, 1}, {1, 5, 1}}});
+
+         auto vectorsJacobi = std::vector<Algebra::Matrix>();
+         auto vectorsSeidel = std::vector<Algebra::Matrix>();
+         for (auto i = 0; i < n_systems; i++) {
+
+            Models::GaussJacobi gaussJacobi;
+            Models::GaussSeidel gaussSeidel;
+
+            vectorsJacobi.emplace_back(gaussJacobi.solveInverse(matrices[i], 1e-5, 100));
+            vectorsSeidel.emplace_back(gaussSeidel.solveInverse(matrices[i], 1e-5, 100));
+         }
+         std::cout << std::endl;
+         for (auto i = 0; i < n_systems; i++) {
+            std::cout << "Resolvendo a inversa " << i + 1<< ":" << std::endl;
+            
+            std::cout << "Solução por Gauss-Jacobi: " << std::endl;
+            std::cout << std::endl;
+            std::cout << vectorsJacobi[i] << std::endl;
+            std::cout << std::endl;
+            std::cout << "Solução por Gauss-Seidel: " << std::endl;
+            std::cout << std::endl;
+            std::cout << vectorsSeidel[i] << std::endl;
+            std::cout << std::endl;
+         }
+      } else if (newOrBenchmark == 0) {
+         size_t size =
+         Inputs::Number<size_t>(
+            &greater_than_zero,
+            "Entre o tamanho da matriz: ")
+            .read(std::cin, std::cout, std::cerr);
+         
+         Algebra::Matrix A(size);
+
+         auto valid_epsilon = Inspector::NumberValidator<double>("");
+         valid_epsilon.greaterThan(0);
+         double epsilon =
+            Inputs::Number<double>(&valid_epsilon, "Digite o valor do epsilon: ")
+               .read(std::cin, std::cout, std::cerr);
+
+         std::cout << std::endl;
+
+         double aux;
+         std::cout << std::endl;
+         for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+               std::cout << "Entre o elemento A" << i << "x" << j << ": ";
+               std::cin >> aux;
+               A.setValue(i, j, aux);
+            }
+         }
+
+         std::cout << std::endl;
+         
+         size_t jacobiSeidel =
+         Inputs::Number<size_t>(
+            &ternario,
+            "Deseja utilizar o método de Gauss-Jacobi, Gauss-Seidel, ou ambos? [0/1/2]: ")
+            .read(std::cin, std::cout, std::cerr);
+         
+         std::cout << std::endl;
+
+         Models::GaussJacobi jacobi;
+         Models::GaussSeidel seidel;
+         Algebra::Vector jacobiResult(size);
+         Algebra::Vector seidelResult(size);
+         Algebra::Matrix A2(size);
+
+         if (jacobiSeidel == 0 || jacobiSeidel == 2) {
+            std::cout << "Solução por Gauss-Jacobi:\n";
+            std::cout << std::endl;
+            std::cout << jacobi.solveInverse(A, epsilon, 100) << std::endl; 
+            std::cout << std::endl;
+         }
+         if (jacobiSeidel == 1 || jacobiSeidel == 2) {
+            std::cout << "Solução por Gauss-Seidel:\n";
+            std::cout << std::endl;
+            std::cout << seidel.solveInverse(A, epsilon, 100) << std::endl; 
+            std::cout << std::endl;
+         }
+      }
+   }
 }

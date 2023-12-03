@@ -112,7 +112,7 @@ Matrix Matrix::pivote_max() const {
     double max = m.getValue(j, j);
     double max_line = j;
     for (size_t i = j + 1; i < size; ++i) {
-      double v = m.getValue(i, j);
+      double v = std::abs(m.getValue(i, j));
       if (v > max) {
         max = v;
         max_line = i;
