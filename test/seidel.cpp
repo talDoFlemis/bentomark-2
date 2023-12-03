@@ -38,3 +38,11 @@ TEST(SeidelTest, FourByFour) {
     EXPECT_NEAR(res.getValue(i), expected.getValue(i), error);
   }
 }
+
+TEST(SeidelTest, EmptyResult) {
+  // TODO: testar se o resultado é vazio quando não converge
+}
+
+TEST(SeidelTest, EvalModelResult) {
+  // TODO: testar se o ModelResult está correto
+}
