@@ -47,6 +47,7 @@ int main(int argc, char *argv[]) {
           "Digite a quantidade de sistemas que você deseja resolver: ")
           .read(std::cin, std::cout, std::cerr);
   auto matrices = std::vector<Algebra::Matrix>();
+  auto pivoteds = std::vector<Algebra::Matrix>();
   auto vectors = std::vector<Algebra::Vector>();
 
   // auto valid_epsilon = Inspector::NumberValidator<double>("");
@@ -74,9 +75,15 @@ int main(int argc, char *argv[]) {
 
   matrices.emplace_back(Algebra::Matrix{{{10, 2, 1}, {1, 5, 1}, {2, 3, 10}}});
   vectors.emplace_back(Algebra::Vector{7, -8, 6});
+  pivoteds.emplace_back(matrices[0].pivote_max());
 
   matrices.emplace_back(Algebra::Matrix{{{5, 3, 1}, {5, 6, 1}, {1, 6, 7}}});
   vectors.emplace_back(Algebra::Vector{1, 2, 3});
+  pivoteds.emplace_back(matrices[1].pivote_max());
+
+  matrices.emplace_back(Algebra::Matrix{{{2, 3, 10}, {10, 2, 1}, {1, 5, 1}}});
+  vectors.emplace_back(Algebra::Vector{7, -8, 6});
+  pivoteds.emplace_back(matrices[2].pivote_max());
 
   auto vectorsJacobi = std::vector<Algebra::Vector>();
   auto vectorsSeidel = std::vector<Algebra::Vector>();
@@ -84,8 +91,14 @@ int main(int argc, char *argv[]) {
 
     Models::GaussJacobi gaussJacobi;
     Models::GaussSeidel gaussSeidel;
-    gaussJacobi.solve(matrices[i], vectors[i], 0.01, 1000);
-    gaussSeidel.solve(matrices[i], vectors[i], 0.01, 1000);
+
+    if (matrices[i].checkLineCriteria()) {
+      gaussJacobi.solve(matrices[i], vectors[i], 0.01, 1000);
+      gaussSeidel.solve(matrices[i], vectors[i], 0.01, 1000);
+    } else {
+      gaussJacobi.solve(pivoteds[i], vectors[i], 0.01, 1000);
+      gaussSeidel.solve(pivoteds[i], vectors[i], 0.01, 1000);
+    }
 
     vectorsJacobi.emplace_back(gaussJacobi.getResult());
     vectorsSeidel.emplace_back(gaussSeidel.getResult());

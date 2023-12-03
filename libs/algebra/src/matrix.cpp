@@ -80,3 +80,76 @@ std::ostream &Algebra::operator<<(std::ostream &os, const Matrix &matrix) {
   }
   return os;
 }
+
+bool Matrix::checkLineCriteria() const {
+  for (int i = 0; i < size; i++) {
+    double diagonal = getValue(i, i);
+    double resto = 0;
+    for (int j = 0; j < size; j++) {
+      if (i != j) {
+        resto += getValue(i, j);
+      }
+    }
+
+    if (diagonal < resto) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+Matrix Matrix::pivote_max() const {
+  Algebra::Matrix m{size};
+
+  for (int i = 0; i < size; i++) {
+    for (int j = 0; j < size; j++) {
+      m.setValue(i, j, getValue(i, j));
+    }
+  }
+
+  for (size_t j = 0; j < size; ++j) {
+    double max = m.getValue(j, j);
+    double max_line = j;
+    for (size_t i = j + 1; i < size; ++i) {
+      double v = m.getValue(i, j);
+      if (v > max) {
+        max = v;
+        max_line = i;
+      }
+    }
+
+    if (max_line != j) {
+      double aux;
+      for (size_t k = 0; k < size; ++k) {
+        aux = m.getValue(j, k);
+        m.setValue(j, k, m.getValue(max_line, k));
+        m.setValue(max_line, k, aux);
+      }
+    }
+  }
+
+  return m;
+}
+
+// nao utilizado
+Matrix Matrix::upper_triangular() const {
+  Algebra::Matrix m{*this};
+
+  // turns `m` into upper triangular
+  for (size_t p = 0; p < size; ++p) {
+    double pivot = getValue(p, p);
+    for (size_t i = p + 1; i < size; ++i) {
+      double x = getValue(i, p);
+      if (x == 0) {
+        continue;
+      }
+
+      for (size_t j = 0; j < size; ++j) {
+        double new_val = m.getValue(i, j) - (getValue(p, j) * (x / pivot));
+        m.setValue(i, j, new_val);
+      }
+    }
+  }
+  return m;
+}
