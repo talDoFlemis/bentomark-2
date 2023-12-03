@@ -83,11 +83,11 @@ std::ostream &Algebra::operator<<(std::ostream &os, const Matrix &matrix) {
 
 bool Matrix::checkLineCriteria() const {
   for (int i = 0; i < size; i++) {
-    double diagonal = getValue(i, i);
+    double diagonal = std::abs(getValue(i, i));
     double resto = 0;
     for (int j = 0; j < size; j++) {
       if (i != j) {
-        resto += getValue(i, j);
+        resto += std::abs(getValue(i, j));
       }
     }
 
