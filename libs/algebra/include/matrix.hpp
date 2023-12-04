@@ -5,7 +5,6 @@
 #include <cstddef>
 #include <initializer_list>
 #include <ostream>
-#include <sstream>
 #include <vector>
 
 namespace Algebra {
@@ -44,3 +43,5 @@ std::ostream &operator<<(std::ostream &os, const Matrix &matrix);
 }; // namespace Algebra
 
 #endif
+
+

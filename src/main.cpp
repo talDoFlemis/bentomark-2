@@ -83,16 +83,19 @@ int main(int argc, char *argv[]) {
          auto pivoteds = std::vector<Algebra::Matrix>();
          auto vectors = std::vector<Algebra::Vector>();
 
-         matrices.emplace_back(Algebra::Matrix{{{10, 2, 1}, {1, 5, 1}, {2, 3, 10}}});
-         vectors.emplace_back(Algebra::Vector{7, -8, 6});
+         matrices.emplace_back(Algebra::Matrix{{{0, 2}, {1, -1, 0}}});
+         vectors.emplace_back(Algebra::Vector{1, 1});
          pivoteds.emplace_back(matrices[0].pivote_max());
 
          matrices.emplace_back(Algebra::Matrix{{{5, 3, 1}, {5, 6, 1}, {1, 6, 7}}});
          vectors.emplace_back(Algebra::Vector{1, 2, 3});
          pivoteds.emplace_back(matrices[1].pivote_max());
 
-         matrices.emplace_back(Algebra::Matrix{{{2, 3, 10}, {10, 2, 1}, {1, 5, 1}}});
-         vectors.emplace_back(Algebra::Vector{7, -8, 6});
+         matrices.emplace_back(Algebra::Matrix{{{12, 4, 3, 4}, 
+         {2, 7, 3, 1}, 
+         {3, 4, 9, 1},
+         {1, 0, 5, 8}}});
+         vectors.emplace_back(Algebra::Vector{1, 4, 0, 8});
          pivoteds.emplace_back(matrices[2].pivote_max());
 
          auto vectorsJacobi = std::vector<Algebra::Vector>();
@@ -331,4 +334,9 @@ int main(int argc, char *argv[]) {
          }
       }
    }
+
+   // Inicializa uma matriz 3x3
+   Algebra::Matrix M(3); 
+   // Inicializa um vetor de tamanho 4
+   Algebra::Vector v(4);  
 }
